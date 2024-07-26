@@ -1,15 +1,13 @@
-/* Requires the Docker Pipeline plugin */
 pipeline {
-    stage('Initialize'){
-        def dockerHome = tool 'my_docker'
-        env.PATH = "${dockerHome}/bin:${env.PATH}"
-    }
-    agent { docker { image 'python:3.12.4-alpine3.20' } }
+    agent any
     stages {
-        stage('build') {
+        stage('Build') {
             steps {
-                sh 'python --version'
-                sh 'python jenkins_learn.py'
+                sh 'echo "Hello World"'
+                sh '''
+                    echo "Multiline shell steps works too"
+                    ls -lah
+                '''
             }
         }
     }
