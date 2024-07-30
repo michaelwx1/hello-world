@@ -7,6 +7,14 @@ pipeline {
             steps {
                 echo './deploy staging'
                 echo './run-smoke-tests'
+                publishHTML target: [
+                    allowMissing: false,
+                    alwaysLinkToLastBuild: false,
+                    keepAll: true,
+                    reportDir: 'coverage',
+                    reportFiles: 'index.html',
+                    reportName: 'RCov Report'
+                  ]
             }
         }
 
