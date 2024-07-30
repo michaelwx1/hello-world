@@ -1,11 +1,24 @@
 pipeline {
-    agent {
-        docker { image 'node:20.16.0-alpine3.20' }
-    }
+    agent any
     stages {
-        stage('Test') {
+        /* "Build" and "Test" stages omitted */
+
+        stage('Deploy - Staging') {
             steps {
-                sh 'node --version'
+                sh './deploy staging'
+                sh './run-smoke-tests'
+            }
+        }
+
+        stage('Sanity check') {
+            steps {
+                input "Does the staging environment look ok?"
+            }
+        }
+
+        stage('Deploy - Production') {
+            steps {
+                sh './deploy production'
             }
         }
     }
